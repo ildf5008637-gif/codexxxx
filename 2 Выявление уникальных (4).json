@@ -1,0 +1,1992 @@
+{
+  "name": "2 Выявление уникальных",
+  "nodes": [
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 588979618,
+          "mode": "list",
+          "cachedResultName": "Уникальные",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=588979618"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "ДатаМероприятия",
+              "lookupValue": "={{ $('Читать Новые').item.json['ДатаМероприятия'] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        704,
+        1984
+      ],
+      "id": "c8bda101-efee-4d81-88c8-b117607d6c06",
+      "name": "Читать Уникальные",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Обработано",
+              "lookupValue": "нет"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -160,
+        1984
+      ],
+      "id": "626e5aa3-4de4-4974-8d15-171a89503575",
+      "name": "Читать Новые",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "deepseek/deepseek-v4-flash",
+          "mode": "list",
+          "cachedResultName": "deepseek/deepseek-v4-flash"
+        },
+        "builtInTools": {},
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        2416,
+        2848
+      ],
+      "id": "e2cd8157-13c6-466a-b616-1d822b932739",
+      "name": "OpenAI Chat Model2",
+      "credentials": {
+        "openAiApi": {
+          "id": "s0JF9POArZGRqcmi",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 588979618,
+          "mode": "list",
+          "cachedResultName": "Уникальные",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=588979618"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "ТелоПоста": "={{ $('Читать Новые').item.json['ТелоПоста'] }}",
+            "Канал": "={{ $('Читать Новые').item.json['Канал'] }}",
+            "АйдиКанала": "={{ $('Читать Новые').item.json['АйдиКанала'] }}",
+            "Дата": "={{ $('Читать Новые').item.json['Дата'] }}",
+            "ДатаМероприятия": "={{ $('Читать Новые').item.json['ДатаМероприятия'] }}",
+            "Номер": "={{ $json.event_id }}",
+            "ВремяЗаписи": "={{ $now.setZone('Europe/Moscow').toFormat('dd.MM.yyyy HH:mm:ss') }}",
+            "СсылкаНаПост": "={{ $('Читать Новые').item.json['СсылкаНаПост'] }}",
+            "Цена мин": "={{ $('Limit1').item.json['Цена мин'] }}",
+            "Цена Макс": "={{ $('Limit1').item.json['Цена Макс'] }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "ВремяЗаписи",
+              "displayName": "ВремяЗаписи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Номер",
+              "displayName": "Номер",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "СсылкаНаПост",
+              "displayName": "СсылкаНаПост",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "СтатусОбработки",
+              "displayName": "СтатусОбработки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Номер Оригинала",
+              "displayName": "Номер Оригинала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Тип мероприятия",
+              "displayName": "Тип мероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Обработка Кино",
+              "displayName": "Обработка Кино",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена мин",
+              "displayName": "Цена мин",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена Макс",
+              "displayName": "Цена Макс",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2848,
+        1968
+      ],
+      "id": "f88fdc95-2727-461f-8ad3-cfd02697573a",
+      "name": "Добавить уникльное",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 588979618,
+          "mode": "list",
+          "cachedResultName": "Уникальные",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=588979618"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Номер": "={{ $('ЧИтаем айди').item.json['Номер'] }}",
+            "ТелоПоста": "={{ $json.output }}",
+            "Цена мин": "={{ $('Limit1').item.json['Цена мин'] !== '' && $('Limit1').item.json['Цена мин'] !== null\n? $('Limit1').item.json['Цена мин']\n: $('ЧИтаем айди').item.json['Цена мин'] }}",
+            "Цена Макс": "={{ $('Limit1').item.json['Цена Макс'] !== '' && $('Limit1').item.json['Цена Макс'] !== null\n? $('Limit1').item.json['Цена Макс']\n: $('ЧИтаем айди').item.json['Цена Макс'] }}"
+          },
+          "matchingColumns": [
+            "Номер"
+          ],
+          "schema": [
+            {
+              "id": "ВремяЗаписи",
+              "displayName": "ВремяЗаписи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер",
+              "displayName": "Номер",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "СсылкаНаПост",
+              "displayName": "СсылкаНаПост",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "СтатусОбработки",
+              "displayName": "СтатусОбработки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Номер Оригинала",
+              "displayName": "Номер Оригинала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Тип мероприятия",
+              "displayName": "Тип мероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Обработка Кино",
+              "displayName": "Обработка Кино",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена мин",
+              "displayName": "Цена мин",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена Макс",
+              "displayName": "Цена Макс",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3104,
+        2528
+      ],
+      "id": "821ff47e-1d7d-40d4-a0c2-3df883771128",
+      "name": "Дополнить существующее",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты — редактор базы уникальных мероприятий.\n\nСравни **НОВОЕ СООБЩЕНИЕ** с существующими мероприятиями и выбери один статус:\n\n* **Дубль** — то же мероприятие, новой существенной информации нет.\n* **Дополнение** — то же мероприятие, но появилась существенная новая информация.\n* **Новый** — другое конкретное мероприятие.\n\n### НОВОЕ СООБЩЕНИЕ\n\n{{ $('Limit1').item.json['ТелоПоста'] }}\n\n### СУЩЕСТВУЮЩИЕ МЕРОПРИЯТИЯ\n\n{{ JSON.stringify($json.events) }}\n\nУ каждого объекта есть поле **\"Номер\"** — уникальный идентификатор мероприятия.\n\n## 1. ОПРЕДЕЛИ, ТО ЖЕ ЛИ ЭТО МЕРОПРИЯТИЕ\n\nСравнивай **само событие**, а не тексты.\n\nУчитывай совокупность:\n\n* название;\n* исполнителей / участников;\n* дату;\n* время;\n* место / адрес;\n* организатора;\n* программу;\n* цену;\n* условия посещения;\n* другие уникальные детали.\n\nНе требуй совпадения всех полей: часть информации может отсутствовать или появиться только в новом сообщении.\n\nПерефразирование, эмодзи, пунктуация, регистр, опечатки и разные способы записи даты, времени или места сами по себе ничего не меняют.\n\nЕсли это другое конкретное событие → **Новый**.\n\nЕсли это то же событие → переходи к пункту 2.\n\n## 2. ПРОВЕРЬ НОВУЮ ИНФОРМАЦИЮ\n\nЕсли новое сообщение содержит **хотя бы одну существенную деталь, которой не было в существующем мероприятии** → **Дополнение**.\n\nК существенной информации относятся, например:\n\n* новое время;\n* цена;\n* точное место / адрес;\n* новые участники;\n* программа;\n* возрастное ограничение;\n* условия входа;\n* необходимость регистрации;\n* ссылка на билеты / регистрацию;\n* важное изменение условий;\n* другая полезная информация о посещении события.\n\nПример:\n\nСтарое:\n\"25 августа концерт группы X в Казани.\"\n\nНовое:\n\"25 августа концерт группы X в Казани. Начало в 19:00, вход 500 ₽.\"\n\n→ **Дополнение**\n\nЕсли новая информация только перефразирует уже известное или является несущественной → **Дубль**.\n\nПример:\n\nСтарое:\n\"25 августа концерт группы X в Казани.\"\n\nНовое:\n\"25 августа большой концерт группы X в Казани!\"\n\n→ **Дубль**\n\n## 3. НОВЫЙ\n\nВыбирай **Новый** только если есть реальные основания считать, что это другое конкретное мероприятие.\n\nНапример:\n\n* другая дата, если это отдельное событие;\n* другой исполнитель;\n* другое мероприятие;\n* другое место, если это отдельное событие;\n* существенно другая программа или формат.\n\nОдного общего признака недостаточно. Оценивай всё событие целиком.\n\nЕсли небольшая нестыковка может быть ошибкой, уточнением или дополнением, не выбирай **Новый**.\n\n## 4. EVENT_ID — ОБЯЗАТЕЛЬНО\n\nДля **Дубль** и **Дополнение**:\n\n1. Найди в `events` конкретный объект, который соответствует новому сообщению.\n2. Возьми из него значение поля **\"Номер\"**.\n3. Скопируй это значение **буквально, без изменений**.\n4. Запиши его в `event_id`.\n\n**Для Дубля и Дополнения `event_id` НИКОГДА не может быть пустым.**\n\nНе используй вместо `Номер`:\n\n* `row_number`;\n* индекс массива;\n* `АйдиКанала`;\n* дату;\n* другие поля.\n\nДля **Нового** `event_id` должен быть пустой строкой.\n\n### ФИНАЛЬНАЯ ПРОВЕРКА\n\nПеред ответом проверь:\n\n* Дубль → `event_id` = `Номер` найденного мероприятия.\n* Дополнение → `event_id` = `Номер` найденного мероприятия.\n* Новый → `event_id` = `\"\"`.\n\n### ФОРМАТ ОТВЕТА\n\nВерни **только валидный JSON**, без Markdown и пояснений.\n\n{\n\"status\": \"Дубль\",\n\"event_id\": \"evt_1787933253325\"\n}\n\nили\n\n{\n\"status\": \"Дополнение\",\n\"event_id\": \"evt_1787933253325\"\n}\n\nили\n\n{\n\"status\": \"Новый\",\n\"event_id\": \"\"\n}\n",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        1504,
+        2128
+      ],
+      "id": "7e2d63ba-f5af-4fb2-8b89-5612847ce674",
+      "name": "Проверка новизны"
+    },
+    {
+      "parameters": {
+        "aggregate": "aggregateAllItemData",
+        "destinationFieldName": "events",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.aggregate",
+      "typeVersion": 1,
+      "position": [
+        928,
+        1984
+      ],
+      "id": "3018ddb9-6d4f-40ce-b632-33145fefd0f7",
+      "name": "Aggregate"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "{\n  \"new_message\": \"{{ $('Limit1').item.json['ТелоПоста'] }}\"\n}",
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1328,
+        2128
+      ],
+      "id": "f88525d1-6bb1-402f-a115-f47d19df1c57",
+      "name": "Edit Fields1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "minutes",
+              "minutesInterval": 2
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        1984
+      ],
+      "id": "39fe8c23-e41c-4629-8063-7e9aa2ea0c76",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "content": "Если пока нет событий в этот день, проверять на нуникальность нет смысла, поэтому идем прямо",
+        "height": 80,
+        "width": 320
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1264,
+        1872
+      ],
+      "typeVersion": 1,
+      "id": "94029c96-fbcc-452a-8a58-3c73ac15765e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Ты являешься редактором базы уникальных мероприятий.\n\nТвоя задача — обновить текст существующего мероприятия новой информацией из нового сообщения.\n\nНа входе у тебя есть:\n\n1. СУЩЕСТВУЮЩЕЕ МЕРОПРИЯТИЕ — событие, которое уже найдено в базе как соответствующее новому сообщению.\n\n2. НОВОЕ СООБЩЕНИЕ — новый текст, который может содержать дополнительную информацию об этом же мероприятии.\n\n### СУЩЕСТВУЮЩЕЕ МЕРОПРИЯТИЕ\n\n{{ $('ЧИтаем айди').first().json['ТелоПоста'] }}\n\n### НОВОЕ СООБЩЕНИЕ\n\n{{ $('Limit1').item.json['ТелоПоста'] }}\n\nСравни существующее мероприятие с новым сообщением.\n\nОпредели, содержит ли новое сообщение какую-либо информацию, которой нет в существующем тексте мероприятия.\n\nДополнительной информацией может быть, например:\n\n- новое время;\n- уточнённая дата;\n- место проведения;\n- точный адрес;\n- название мероприятия;\n- имя участника или исполнителя;\n- организатор;\n- стоимость;\n- ссылка;\n- условия участия;\n- программа;\n- описание мероприятия;\n- другие конкретные сведения, которые делают описание события более полным.\n\n### ЕСЛИ НОВОЙ ИНФОРМАЦИИ НЕТ\n\nВерни существующий текст БЕЗ ИЗМЕНЕНИЙ.\n\nНе переписывай его.\nНе сокращай.\nНе меняй порядок информации.\nНе меняй формулировки.\n\n### ЕСЛИ НОВАЯ ИНФОРМАЦИЯ ЕСТЬ\n\nСоздай один итоговый текст мероприятия:\n\n- сохрани всю полезную информацию из существующего текста;\n- добавь новую информацию из нового сообщения;\n- объедини информацию логично и естественно;\n- не дублируй уже существующую информацию;\n- не удаляй информацию из существующего текста;\n- не добавляй информацию, которой нет ни в существующем тексте, ни в новом сообщении;\n- если новая информация уточняет старую, используй более точную или полную версию;\n- если новая информация противоречит существующей, не придумывай решение самостоятельно — используй новую информацию только если из нового сообщения явно понятно, что она является уточнением или исправлением.\n\n### ВАЖНО\n\nТы НЕ определяешь, является ли мероприятие дублем.\n\nЭто уже было определено предыдущей нодой.\n\nТы НЕ создаёшь новое мероприятие.\n\nТы НЕ создаёшь новый номер мероприятия.\n\nТебе нужно только получить ФИНАЛЬНЫЙ ТЕКСТ существующего мероприятия после добавления новой информации.\n\n### ФОРМАТ ОТВЕТА\n\nВерни ТОЛЬКО итоговый текст мероприятия.\n\nБез JSON.\nБез Markdown.\nБез кавычек вокруг текста.\nБез пояснений.\nБез слов «обновлено», «дополнено» или других комментариев.\n\nЕсли новой информации нет — верни существующий текст дословно.\nЕсли новая информация есть — верни существующий текст, дополненный новой информацией.",
+        "needsFallback": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        2800,
+        2528
+      ],
+      "id": "66b37f9c-9327-4ec4-b394-4278717cb107",
+      "name": "Дополнение уникального"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.limit",
+      "typeVersion": 1,
+      "position": [
+        320,
+        1984
+      ],
+      "id": "74ed4e63-2739-46c4-98d0-d5ba58487366",
+      "name": "Limit1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "194b3b71-8ad5-4557-934d-17a43a5b035c",
+              "leftValue": "={{ $json.events.length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1120,
+        1984
+      ],
+      "id": "7f65d8a5-7879-4a4f-b27c-123c5ba44ce1",
+      "name": "На этот день нет событий",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"event_id\": \"{{ 'evt_' + $now.toMillis() }}\"\n}",
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        2640,
+        1968
+      ],
+      "id": "0bd65671-ac17-4928-88b4-0fd520e4b9f8",
+      "name": "Уникальный номер задать"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Обработано": "В обработке",
+            "row_number": "={{ $('Limit1').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Обработано",
+              "displayName": "Обработано",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        496,
+        1984
+      ],
+      "id": "6cdd4b05-7dad-4f6b-b291-c8bedabdfb1f",
+      "name": "Статус В обработке",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 588979618,
+          "mode": "list",
+          "cachedResultName": "Уникальные",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=588979618"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Номер",
+              "lookupValue": "={{ JSON.parse($('Проверка новизны').first().json.output).event_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2624,
+        2512
+      ],
+      "id": "7076ff0d-8054-48b6-9f48-05f7af5174a1",
+      "name": "ЧИтаем айди",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "вроде редачит немного вход чтобы джисон красивый был",
+        "height": 80,
+        "width": 192
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        2288
+      ],
+      "typeVersion": 1,
+      "id": "d49425d5-26e6-49bc-9d19-6e3285ad1061",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## Определяет уникальные и добавляет на лист Уникальные.\n\n## Либо редактирует на Уникальные старый пост",
+        "height": 816,
+        "width": 256
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -464,
+        2272
+      ],
+      "typeVersion": 1,
+      "id": "8ff61c81-7e10-4483-985f-df412d9e90e5",
+      "name": "Sticky Note12"
+    },
+    {
+      "parameters": {
+        "content": "Этот блок наверное надо переделать и обновления не вписывать на метсо старого а делать новую запись но с привязкой что это одно событие. Тогда если еще у ИИ будет сведения об источнике то ей будет проще составить мнение что написать в итоге.\n\n\n\nХотя скорее стоит с ИИ обсудить варианты реализации.\n\nВозможно надо квена попросить дописывать информацию с учетом качества источника например. Первоисточнику приоритет например отдается.\n\nили допустим он дополняет все время информацию. А если возникает противоречие информации из разных каналов, фиксирует и отдает алгоритму разбирающему противоречия. Там уже учитываются более широкие аспекты: все источники, новизна итд. Этот алгоритм можно будет отдельно исследовать и смотреть как работает. Возможно его имеет смысл сделать в отдельном ворк фло.",
+        "height": 384,
+        "width": 576
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        480,
+        2336
+      ],
+      "typeVersion": 1,
+      "id": "650ffde8-6fe2-45f5-8b9d-08719d12f250",
+      "name": "Sticky Note13"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Обработано": "да",
+            "row_number": "={{ $('Limit1').item.json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Обработано",
+              "displayName": "Обработано",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "output",
+              "displayName": "output",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3440,
+        2192
+      ],
+      "id": "4f0c47f4-a582-434d-9679-567416fe50e5",
+      "name": "Пометка Обработано на Лист1",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Limit1').item.json.row_number }}",
+            "Тип": "Дополнение"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Обработано",
+              "displayName": "Обработано",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Тип",
+              "displayName": "Тип",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        3360,
+        2656
+      ],
+      "id": "26a5c2d3-5b40-4a78-8b35-4b4ecc48925a",
+      "name": "Тип Дополнение. Пишет в Лист1",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Лист1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "row_number": "={{ $('Limit1').item.json.row_number }}",
+            "Тип": "Новое"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Обработано",
+              "displayName": "Обработано",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Тип",
+              "displayName": "Тип",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2992,
+        1808
+      ],
+      "id": "33c45388-c875-4aa9-81fd-e5d07c1028a8",
+      "name": "Тип Новое. Пишет в Лист1",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Для Отладки надо:\n1) Поставить статус \"нет\" в колонке Обработка, лист1 -источник\n2) Если есть уже эта строка в Листе Уникаьные либо изменить либо удалить",
+        "height": 208,
+        "width": 368
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        768,
+        1648
+      ],
+      "typeVersion": 1,
+      "id": "2a213754-3937-4018-a739-c4faf7d4b339",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2cfd845d-b297-4f8b-a62d-4a57167e52f7",
+              "leftValue": "={{ JSON.parse($json.output).status }}",
+              "rightValue": "Дубль",
+              "operator": {
+                "type": "string",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        1952,
+        2128
+      ],
+      "id": "9f67fcaf-ab6f-453b-af3d-442e2375fe13",
+      "name": "Не дубль"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2cfd845d-b297-4f8b-a62d-4a57167e52f7",
+              "leftValue": "={{ JSON.parse($json.output).status }}",
+              "rightValue": "Новый",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2368,
+        2112
+      ],
+      "id": "03fd4403-96d2-4019-b146-92318632972c",
+      "name": "Новый или Дополнение"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "@preset/qwendeepsek",
+          "mode": "id"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        1744,
+        2608
+      ],
+      "id": "e8bc0b76-99eb-47af-a4ee-f89b2e2c49a2",
+      "name": "Опенроутер сетом",
+      "credentials": {
+        "openAiApi": {
+          "id": "6SPcSOSOPFhAJLBv",
+          "name": "Опенроут Сетом"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "d50451d5-d910-4e90-bdbd-264f810c875d",
+              "leftValue": "={{ DateTime.fromFormat($json[\"ДатаМероприятия\"], \"dd.MM.yyyy\").isValid ? DateTime.fromFormat($json[\"ДатаМероприятия\"], \"dd.MM.yyyy\") : DateTime.fromISO(\"1900-01-01\") }}",
+              "rightValue": "2026-09-19T00:00:00",
+              "operator": {
+                "type": "dateTime",
+                "operation": "afterOrEquals"
+              }
+            },
+            {
+              "id": "90086c44-ad6e-460c-80be-a67e5bdbb95f",
+              "leftValue": "={{ DateTime.fromFormat($json[\"ДатаМероприятия\"], \"dd.MM.yyyy\").isValid ? DateTime.fromFormat($json[\"ДатаМероприятия\"], \"dd.MM.yyyy\") : DateTime.fromISO(\"1900-01-01\") }}",
+              "rightValue": "={{ DateTime.now().plus({ months: 2 }).endOf(\"day\") }}",
+              "operator": {
+                "type": "dateTime",
+                "operation": "beforeOrEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2.2,
+      "position": [
+        64,
+        1984
+      ],
+      "id": "1cc3b223-3579-40ce-acb9-f63ebf238670",
+      "name": "Отсечка старых событий и наоборот далеких"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "67c7e5bb-424c-4603-83b7-3d7d127eaefb",
+              "name": "ЦенаМинНовая",
+              "value": "={{ $('Limit1').item.json['Цена мин'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c65389e8-eb54-46d9-b5c2-e71ba27f1f1d",
+              "name": "ЦенаМаксНовая",
+              "value": "={{ $('Limit1').item.json['Цена Макс'] }}",
+              "type": "string"
+            },
+            {
+              "id": "c085609b-9a7d-421e-99e9-14fba271007b",
+              "name": "ЦенаМинСтарая",
+              "value": "={{ $('Читать Уникальные').all().find(item =>   item.json['Номер'] === JSON.parse($('Проверка новизны').item.json.output).event_id )?.json['Цена мин'] || '' }}",
+              "type": "string"
+            },
+            {
+              "id": "745a8908-4fef-4f63-b475-ca1e2118ce73",
+              "name": "ЦенаМаксСтарая",
+              "value": "={{ $('Читать Уникальные').all().find(item =>   item.json['Номер'] === JSON.parse($('Проверка новизны').item.json.output).event_id )?.json['Цена Макс'] || '' }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1920,
+        2368
+      ],
+      "id": "a1659d1a-7259-4fef-9823-b36117e07d55",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6b501a38-b950-4c37-9d7d-12526f7b5ece",
+              "leftValue": "={{\n  (\n    $json.ЦенаМинНовая !== '' &&\n    $json.ЦенаМинНовая !== $json.ЦенаМинСтарая\n  ) ||\n  (\n    $json.ЦенаМаксНовая !== '' &&\n    $json.ЦенаМаксНовая !== $json.ЦенаМаксСтарая\n  )\n}}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        2080,
+        2368
+      ],
+      "id": "e85adafc-1cf9-41fc-80b0-e48659451e9e",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI",
+          "mode": "url"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 588979618,
+          "mode": "list",
+          "cachedResultName": "Уникальные",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1HMcEeviKz6xyHtMwo6YFJTD-bU1lXV5gw6aTpNX6XBI/edit#gid=588979618"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Номер": "={{ JSON.parse($('Проверка новизны').item.json.output).event_id }}",
+            "Цена мин": "={{ $('Edit Fields').item.json.ЦенаМинНовая }}",
+            "Цена Макс": "={{ $('Edit Fields').item.json.ЦенаМаксНовая }}"
+          },
+          "matchingColumns": [
+            "Номер"
+          ],
+          "schema": [
+            {
+              "id": "ВремяЗаписи",
+              "displayName": "ВремяЗаписи",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "ДатаМероприятия",
+              "displayName": "ДатаМероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Номер",
+              "displayName": "Номер",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "АйдиКанала",
+              "displayName": "АйдиКанала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Канал",
+              "displayName": "Канал",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "Дата",
+              "displayName": "Дата",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "ТелоПоста",
+              "displayName": "ТелоПоста",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "СсылкаНаПост",
+              "displayName": "СсылкаНаПост",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "СтатусОбработки",
+              "displayName": "СтатусОбработки",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Номер Оригинала",
+              "displayName": "Номер Оригинала",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Тип мероприятия",
+              "displayName": "Тип мероприятия",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Обработка Кино",
+              "displayName": "Обработка Кино",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена мин",
+              "displayName": "Цена мин",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Цена Макс",
+              "displayName": "Цена Макс",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2272,
+        2272
+      ],
+      "id": "561bcd76-f14e-4729-a6f9-ebb774b3ee44",
+      "name": "Обновить только цену",
+      "credentials": {
+        "googleApi": {
+          "id": "vQBXdjk9YD8EOjbp",
+          "name": "Google Service Account account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Edit Fields": [
+      {
+        "json": {
+          "output": "{\n  \"status\": \"Дубль\",\n  \"event_id\": \"evt_1790058086195\"\n}",
+          "ЦенаМинНовая": "",
+          "ЦенаМаксНовая": "1",
+          "ЦенаМинСтарая": "",
+          "ЦенаМаксСтарая": ""
+        }
+      }
+    ]
+  },
+  "connections": {
+    "Читать Новые": {
+      "main": [
+        [
+          {
+            "node": "Отсечка старых событий и наоборот далеких",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Читать Уникальные": {
+      "main": [
+        [
+          {
+            "node": "Aggregate",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Проверка новизны",
+            "type": "ai_languageModel",
+            "index": 1
+          },
+          {
+            "node": "Дополнение уникального",
+            "type": "ai_languageModel",
+            "index": 1
+          }
+        ]
+      ]
+    },
+    "Добавить уникльное": {
+      "main": [
+        [
+          {
+            "node": "Пометка Обработано на Лист1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Тип Новое. Пишет в Лист1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Проверка новизны": {
+      "main": [
+        [
+          {
+            "node": "Не дубль",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Aggregate": {
+      "main": [
+        [
+          {
+            "node": "На этот день нет событий",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields1": {
+      "main": [
+        [
+          {
+            "node": "Проверка новизны",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Читать Новые",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Дополнение уникального": {
+      "main": [
+        [
+          {
+            "node": "Дополнить существующее",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Limit1": {
+      "main": [
+        [
+          {
+            "node": "Статус В обработке",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "На этот день нет событий": {
+      "main": [
+        [
+          {
+            "node": "Уникальный номер задать",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Edit Fields1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Дополнить существующее": {
+      "main": [
+        [
+          {
+            "node": "Пометка Обработано на Лист1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Тип Дополнение. Пишет в Лист1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Уникальный номер задать": {
+      "main": [
+        [
+          {
+            "node": "Добавить уникльное",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Статус В обработке": {
+      "main": [
+        [
+          {
+            "node": "Читать Уникальные",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ЧИтаем айди": {
+      "main": [
+        [
+          {
+            "node": "Дополнение уникального",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Не дубль": {
+      "main": [
+        [
+          {
+            "node": "Новый или Дополнение",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Новый или Дополнение": {
+      "main": [
+        [
+          {
+            "node": "Уникальный номер задать",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "ЧИтаем айди",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Опенроутер сетом": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Проверка новизны",
+            "type": "ai_languageModel",
+            "index": 0
+          },
+          {
+            "node": "Дополнение уникального",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Отсечка старых событий и наоборот далеких": {
+      "main": [
+        [
+          {
+            "node": "Limit1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Обновить только цену",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Обновить только цену": {
+      "main": [
+        [
+          {
+            "node": "Пометка Обработано на Лист1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "02ebe0b7-6886-40f0-97f8-63c3f7814148",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "9fa612fd2f5fd7ffd5212d5fe658e4451487559d070583286933c732d5c3239f"
+  },
+  "id": "ByUnnRvBUxppexks",
+  "tags": []
+}
